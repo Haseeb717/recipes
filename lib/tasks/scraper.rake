@@ -64,7 +64,7 @@ task :guid_json => :environment do
     url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=#{ingredient.name}&apiKey=a01f7f87b7c64b6a930332c9fb7654d4"
     response = HTTParty.get(url)
     response.each do |recipe|
-      Recipe.create(:title=>recipe.title, :sourceUrl=>recipe.sourceUrl, :image=>recipe.image,:spoonacular_id=>recipe.id)
+      Recipe.create(:title=>recipe["title"], :sourceUrl=>recipe["sourceUrl"], :image=>recipe["image"],:spoonacular_id=>recipe["id"])
     end
   end
 end
