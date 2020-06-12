@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_220931) do
+ActiveRecord::Schema.define(version: 2020_06_12_215903) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -108,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_220931) do
     t.text "instructions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "spoonacular_id"
   end
 
   create_table "recipie_ingredients", force: :cascade do |t|

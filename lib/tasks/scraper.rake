@@ -60,14 +60,11 @@ task :potdrive_scraper => :environment do
 end
 
 task :guid_json => :environment do
-  file = File.read 'public/guid.json'
-  json = JSON.parse file
-  json["assets"].each do |asset|
-    blog = Blog.find_by_video_url(asset["external_id"])
-    puts asset["external_id"]
-    if blog.present?
-      puts "Blog:"+blog.id.to_s
-      blog.update_attributes(:guid=>asset["id"])
+  Ingredient.all.each do |ingredient|
+    url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=#{ingredient.name}&apiKey=a01f7f87b7c64b6a930332c9fb7654d4"
+    response = HTTParty.get(url)
+    response.each do |recipe|
+      Recipe.create(:title=>recipe.title, :sourceUrl=>recipe.sourceUrl, :image=>recipe.image,:spoonacular_id=>recipe.id)
     end
   end
 end
