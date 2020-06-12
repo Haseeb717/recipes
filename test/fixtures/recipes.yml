@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  readyInMinutes: 1
+  sourceUrl: MyString
+  image: MyString
+  summary: MyText
+  vegetarian: false
+  healthScore: 1.5
+  pricePerServing: 1.5
+  instructions: MyText
+
+two:
+  title: MyString
+  readyInMinutes: 1
+  sourceUrl: MyString
+  image: MyString
+  summary: MyText
+  vegetarian: false
+  healthScore: 1.5
+  pricePerServing: 1.5
+  instructions: MyText

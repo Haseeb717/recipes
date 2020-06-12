@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recipie: one
+  meal_type: one
+
+two:
+  recipie: two
+  meal_type: two
