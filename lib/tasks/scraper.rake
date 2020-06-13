@@ -94,14 +94,14 @@ task :ingredients => :environment do
 
     meal_types = response["dishTypes"]
     meal_types.each do |meal_type|
-      ing_title = MealType.find_or_create_by(title: ingredient["title"])
+      ing_title = MealType.find_or_create_by(title: meal_type["title"])
       RecipeMeal.create(:meal_type_id=>ing_title.id,:recipe_id=>recipe.id)
     end   
 
     cuisines = response["cuisines"]
     cuisines.each do |cuisine|
-      ing_title = Cuisine.find_or_create_by(title: ingredient["title"])
-      RecipeCuisine.create(:meal_type_id=>ing_title.id,:recipe_id=>recipe.id)
+      ing_title = Cuisine.find_or_create_by(title: cuisine["title"])
+      RecipeCuisine.create(:cuisine=>ing_title.id,:recipe_id=>recipe.id)
     end    
   end
 end
