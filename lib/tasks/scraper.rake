@@ -87,26 +87,27 @@ task :ingredients => :environment do
 
     
     ingredients = response["extendedIngredients"]
-    ingredients.each do |ingredient|
-      ing_title = Ingredient.find_or_create_by(name: ingredient["title"])
-      
-      RecipieIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ing_title.id,:amount=>ingredient["amount"].to_f,:unit=>ingredient["unit"])
+    if ingredients.present?
+      ingredients.each do |ingredient|
+        ing_title = Ingredient.find_or_create_by(name: ingredient["title"])
+        RecipieIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ing_title.id,:amount=>ingredient["amount"].to_f,:unit=>ingredient["unit"])
+      end
     end
 
     meal_types = response["dishTypes"]
-    
-    meal_types.each do |meal_type|
-      
-      ing_title = MealType.find_or_create_by(title: meal_type)
-      RecipeMeal.create(:meal_type_id=>ing_title.id,:recipe_id=>recipe.id)
-    end   
+    if meal_types.present?
+      meal_types.each do |meal_type|
+        ing_title = MealType.find_or_create_by(title: meal_type)
+        RecipeMeal.create(:meal_type_id=>ing_title.id,:recipe_id=>recipe.id)
+      end   
+    end
 
     cuisines = response["cuisines"]
-    
-    cuisines.each do |cuisine|
-      
-      ing_title = Cuisine.find_or_create_by(title: cuisine)
-      RecipeCuisine.create(:cuisine_id=>ing_title.id,:recipe_id=>recipe.id)
-    end    
+    if cuisines.present?
+      cuisines.each do |cuisine|
+        ing_title = Cuisine.find_or_create_by(title: cuisine)
+        RecipeCuisine.create(:cuisine_id=>ing_title.id,:recipe_id=>recipe.id)
+      end    
+    end
   end
 end
