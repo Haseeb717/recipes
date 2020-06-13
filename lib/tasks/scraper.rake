@@ -68,4 +68,40 @@ task :guid_json => :environment do
     end
   end
 end
+
+task :ingredients => :environment do
+  Recipe.all.each do |recipe|
+    url = "https://api.spoonacular.com/recipes/#{ingredient.spoonacular_id}/information?apiKey=a01f7f87b7c64b6a930332c9fb7654d4"
+    response = HTTParty.get(url)
+    
+    readyInMinutes = response["readyInMinutes"]
+    sourceUrl = response["sourceUrl"]
+    image = response["image"]
+    summary = response["summary"]
+    vegetarian = response["vegetarian"]
+    healthScore = response["healthScore"]
+    pricePerServing = response["pricePerServing"]
+    instructions = response["instructions"]
   
+    recipe.update_attrbutes(:readyInMinutes=>readyInMinutes,:sourceUrl=>sourceUrl,:image=>image,:summary=>summary,:vegetarian=>vegetarian,:healthScore=>healthScore,:pricePerServing=>pricePerServing,:instructions=>instructions)
+
+
+    ingredients = response["extendedIngredients"]
+    ingredients.each do |ingredient|
+      ing_title = Ingredient.find_or_create_by(title: ingredient["title"])
+      RecipeIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ingredient.id,:amount=>ingredient["amount"],:unit=>recipe["unit"])
+    end
+
+    meal_types = response["dishTypes"]
+    meal_types.each do |meal_type|
+      ing_title = MealType.find_or_create_by(title: ingredient["title"])
+      RecipeMeal.create(:meal_type_id=>meal_type.id,:ingredient_id=>ingredient.id)
+    end   
+
+    cuisines = response["cuisines"]
+    cuisines.each do |cuisine|
+      ing_title = Cuisine.find_or_create_by(title: ingredient["title"])
+      RecipeCuisine.create(:meal_type_id=>meal_type.id,:ingredient_id=>ingredient.id)
+    end    
+  end
+end
