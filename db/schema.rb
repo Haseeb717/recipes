@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
   end
 
   create_table "pantries", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "ingredient_id"
+    t.bigint "user_id"
+    t.bigint "ingredient_id"
     t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
   end
 
   create_table "quantities", force: :cascade do |t|
-    t.integer "ingredient_id"
+    t.bigint "ingredient_id"
     t.integer "amount"
     t.float "price"
     t.string "unit"
@@ -82,21 +82,21 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
   end
 
   create_table "recipe_cuisines", force: :cascade do |t|
-    t.integer "recipie_id"
-    t.integer "cuisine_id"
+    t.bigint "recipe_id"
+    t.bigint "cuisine_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cuisine_id"], name: "index_recipe_cuisines_on_cuisine_id"
-    t.index ["recipie_id"], name: "index_recipe_cuisines_on_recipie_id"
+    t.index ["recipe_id"], name: "index_recipe_cuisines_on_recipe_id"
   end
 
   create_table "recipe_meals", force: :cascade do |t|
-    t.integer "recipie_id"
-    t.integer "meal_type_id"
+    t.bigint "recipe_id"
+    t.bigint "meal_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meal_type_id"], name: "index_recipe_meals_on_meal_type_id"
-    t.index ["recipie_id"], name: "index_recipe_meals_on_recipie_id"
+    t.index ["recipe_id"], name: "index_recipe_meals_on_recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -115,14 +115,14 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
   end
 
   create_table "recipie_ingredients", force: :cascade do |t|
-    t.integer "recipie_id"
-    t.integer "ingredient_id"
+    t.bigint "recipe_id"
+    t.bigint "ingredient_id"
     t.float "amount"
     t.string "unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_recipie_ingredients_on_ingredient_id"
-    t.index ["recipie_id"], name: "index_recipie_ingredients_on_recipie_id"
+    t.index ["recipe_id"], name: "index_recipie_ingredients_on_recipe_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -137,4 +137,13 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "pantries", "ingredients"
+  add_foreign_key "pantries", "users"
+  add_foreign_key "quantities", "ingredients"
+  add_foreign_key "recipe_cuisines", "cuisines"
+  add_foreign_key "recipe_cuisines", "recipes"
+  add_foreign_key "recipe_meals", "meal_types"
+  add_foreign_key "recipe_meals", "recipes"
+  add_foreign_key "recipie_ingredients", "ingredients"
+  add_foreign_key "recipie_ingredients", "recipes"
 end

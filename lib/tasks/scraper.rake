@@ -38,7 +38,7 @@ task :potdrive_scraper => :environment do
 
 
     ingredient =  Ingredient.create(:name=>name,:reusable=>reusable,:spoonacular_id=>spoon_id)
-
+    
     if quantity_1.present?
       Quantity.create(:ingredient_id=>ingredient.id,:amount=>quantity_1,:price=>price_1,:unit=>unit_1)
     end
@@ -82,25 +82,30 @@ task :ingredients => :environment do
     healthScore = response["healthScore"]
     pricePerServing = response["pricePerServing"]
     instructions = response["instructions"]
-  
+    
     recipe.update_attributes(:readyInMinutes=>readyInMinutes,:sourceUrl=>sourceUrl,:image=>image,:summary=>summary,:vegetarian=>vegetarian,:healthScore=>healthScore,:pricePerServing=>pricePerServing,:instructions=>instructions)
 
-
+    
     ingredients = response["extendedIngredients"]
     ingredients.each do |ingredient|
       ing_title = Ingredient.find_or_create_by(name: ingredient["title"])
-      RecipieIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ing_title.id,:amount=>ingredient["amount"],:unit=>recipe["unit"])
+      
+      RecipieIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ing_title.id,:amount=>ingredient["amount"].to_f,:unit=>ingredient["unit"])
     end
 
     meal_types = response["dishTypes"]
+    
     meal_types.each do |meal_type|
-      ing_title = MealType.find_or_create_by(title: meal_type["title"])
+      
+      ing_title = MealType.find_or_create_by(title: meal_type)
       RecipeMeal.create(:meal_type_id=>ing_title.id,:recipe_id=>recipe.id)
     end   
 
     cuisines = response["cuisines"]
+    
     cuisines.each do |cuisine|
-      ing_title = Cuisine.find_or_create_by(title: cuisine["title"])
+      
+      ing_title = Cuisine.find_or_create_by(title: cuisine)
       RecipeCuisine.create(:cuisine=>ing_title.id,:recipe_id=>recipe.id)
     end    
   end

@@ -1,5 +1,5 @@
 ActiveAdmin.register RecipieIngredient do
 
-  permit_params :recipie_id, :ingredient_id, :amount, :unit
+  permit_params :recipe_id, :ingredient_id, :amount, :unit
   
 end

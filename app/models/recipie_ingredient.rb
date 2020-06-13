@@ -1,4 +1,4 @@
 class RecipieIngredient < ApplicationRecord
-  belongs_to :recipie
+  belongs_to :recipe
   belongs_to :ingredient
 end
