@@ -106,7 +106,7 @@ task :ingredients => :environment do
     cuisines.each do |cuisine|
       
       ing_title = Cuisine.find_or_create_by(title: cuisine)
-      RecipeCuisine.create(:cuisine=>ing_title.id,:recipe_id=>recipe.id)
+      RecipeCuisine.create(:cuisine_id=>ing_title.id,:recipe_id=>recipe.id)
     end    
   end
 end
