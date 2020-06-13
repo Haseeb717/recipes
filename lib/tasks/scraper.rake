@@ -89,7 +89,7 @@ task :ingredients => :environment do
     ingredients = response["extendedIngredients"]
     ingredients.each do |ingredient|
       ing_title = Ingredient.find_or_create_by(name: ingredient["title"])
-      RecipeIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ing_title.id,:amount=>ingredient["amount"],:unit=>recipe["unit"])
+      RecipieIngredient.create(:recipe_id=>recipe.id,:ingredient_id=>ing_title.id,:amount=>ingredient["amount"],:unit=>recipe["unit"])
     end
 
     meal_types = response["dishTypes"]
