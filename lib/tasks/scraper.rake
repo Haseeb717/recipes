@@ -83,7 +83,7 @@ task :ingredients => :environment do
     pricePerServing = response["pricePerServing"]
     instructions = response["instructions"]
   
-    recipe.update_attrbutes(:readyInMinutes=>readyInMinutes,:sourceUrl=>sourceUrl,:image=>image,:summary=>summary,:vegetarian=>vegetarian,:healthScore=>healthScore,:pricePerServing=>pricePerServing,:instructions=>instructions)
+    recipe.update_attributes(:readyInMinutes=>readyInMinutes,:sourceUrl=>sourceUrl,:image=>image,:summary=>summary,:vegetarian=>vegetarian,:healthScore=>healthScore,:pricePerServing=>pricePerServing,:instructions=>instructions)
 
 
     ingredients = response["extendedIngredients"]
