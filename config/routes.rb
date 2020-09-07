@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
   	namespace :v1 do
+
       resources :users do
         collection do
           post 'signin'
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
         end
       end
 
-      get 'cuisnes' => 'home#cuisnes'
+      get 'cuisines' => 'home#cuisines'
       get 'meal_types' => 'home#meal_types'
     end
   end
