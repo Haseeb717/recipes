@@ -11,7 +11,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 	end	
 
 	def five_minutes_recipes
-		recipes = Recipe.where('readyInMinutes <=?',5)
+		recipes = Recipe.where(:readyInMinutes => 5)
 		render :json=>{recipe: recipes.to_json}
 	end
 
