@@ -6,7 +6,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 	end
 
 	def show
-		recipes = Recipe.find_by_id(params[:id])
+		recipes = Recipe.includes(:ingredients).find_by_id(params[:id])
 		render :json=>{recipe: recipe}
 	end	
 
@@ -16,7 +16,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 	end
 
 	def max_15_min_recipe
-		recipes = Recipe.where('readyInMinutes <=?',5)
+		recipes = Recipe.joins(:ingredients).group('recipes.id').having('COUNT(ingredients.id) < 5').all
 		render :json=>{recipe: recipes.to_json}
 	end
 end
