@@ -6,7 +6,7 @@ class Api::V1::RecipesController < Api::V1::BaseController
 	end
 
 	def show
-		recipes = Recipe.includes(:ingredients).find_by_id(params[:id])
+		recipe = Recipe.includes(:ingredients).find_by_id(params[:id])
 		render :json=>{recipe: recipe}
 	end	
 

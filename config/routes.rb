@@ -17,6 +17,9 @@ Rails.application.routes.draw do
           get 'max_15_min_recipe'
         end
       end
+
+      get 'cuisnes' => 'home#cuisnes'
+      get 'meal_types' => 'home#meal_types'
     end
   end
 
