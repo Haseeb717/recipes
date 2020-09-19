@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 		email = params[:email]
 		password = params[:password]
 
-		user = User.where(:email=>email,:password=>password)
+		user = User.where(:email=>email)
 		if @user.empty?
 			render json: {:success=>false, :message=>"Invalid Email or Password", :user=>@user}, :status=>401
 		else
