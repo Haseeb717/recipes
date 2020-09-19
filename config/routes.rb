@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users do
         collection do
           post 'signin'
+          post 'signup'
         end
       end
 
