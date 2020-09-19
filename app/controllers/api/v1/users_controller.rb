@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-	
+	 skip_before_action :verify_authenticity_token
 	def login
 		email = params[:email]
 		password = params[:password]
