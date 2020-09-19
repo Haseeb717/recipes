@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_06_12_215903) do
     t.index ["recipe_id"], name: "index_recipe_cuisines_on_recipe_id"
   end
 
+
   create_table "recipe_meals", force: :cascade do |t|
     t.bigint "recipe_id"
     t.bigint "meal_type_id"
