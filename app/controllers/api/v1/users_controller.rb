@@ -5,7 +5,11 @@ class Api::V1::UsersController < Api::V1::BaseController
 		password = params[:password]
 
 		user = User.where(:email=>email,:password=>password)
-		render :json=>{user: user}
+		if @user.empty?
+			render json: {:success=>false, :message=>"Invalid Email or Password", :user=>@user}, :status=>401
+		else
+			render json: {:success=>true, :message=>"Login", :user=>@user.first}, :status=>200
+		end
 	end
 
 	def create
